@@ -10,7 +10,10 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def text_analysis(request):
     if request.method == 'POST':
+        print(request.body)
         data = json.loads(request.body)
-        return JsonResponse({"message": data}, status=200)
+        print(data['novel'])
+        data_get = data['novel']
+        return JsonResponse({"result": data_get}, status=200)
     else:
         return JsonResponse({"message": "error"}, status=400)
