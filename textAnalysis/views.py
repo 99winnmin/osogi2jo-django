@@ -1,3 +1,5 @@
+import json
+
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -7,7 +9,8 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def text_analysis(request):
-    if request.method == 'GET':
-        return JsonResponse({"message": "HELLO"}, status=200)
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        return JsonResponse({"message": data}, status=200)
     else:
         return JsonResponse({"message": "error"}, status=400)
