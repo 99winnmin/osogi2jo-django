@@ -16,7 +16,7 @@ default_min_count = 3  # 키워드 최소 빈도수
 # 파일에서 읽기
 novel_path = 'novel.txt'  # 5000줄로 늘림
 novel = open(novel_path, 'r', encoding='utf-8').read()
-
+print(type(novel))
 result_array = []
 
 text_reader = TextReader(novel)
