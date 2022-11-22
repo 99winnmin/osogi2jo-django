@@ -53,7 +53,7 @@ def text_analysis(request):
                     emotion_value = r * int(emotion)
                     emotional_word.append((wordname, emotion_value))
                     emotion_sum += emotion_value
-                    result_array.append((wordname, (text_reader.readsentence / text_reader.novel_len) * 100))
+                    result_array.append((wordname, round((text_reader.readsentence / text_reader.novel_len) * 100)))
             end = time.time()
 
             if emotion_sum == 0:  # 만약 감정 단어를 추출하지 못했다면
@@ -67,7 +67,7 @@ def text_analysis(request):
                         emotion_value = r * int(emotion)
                         emotional_word.append((wordname, emotion_value))
                         emotion_sum += emotion_value
-                        result_array.append((wordname, (text_reader.readsentence / text_reader.novel_len) * 100))
+                        result_array.append((wordname, round((text_reader.readsentence / text_reader.novel_len) * 100)))
                 end = time.time()
 
         print('result : ', result_array)
