@@ -99,7 +99,7 @@ def text_analysis(request):
                 result_array.append(dict(keyword=max_word[0], ratio=max_word[2]))
 
         print('result : ', result_array)
-        result = json.dumps({'result':result_array})
-        return JsonResponse(result, content_type=u"application/json; charset=utf-8", safe=False, status=200)
+        result = json.dumps({'result':result_array},ensure_ascii=False)
+        return HttpResponse(result, status=200)
     else:
         return JsonResponse({"message": "error"}, status=400)
