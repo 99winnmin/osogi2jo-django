@@ -100,6 +100,6 @@ def text_analysis(request):
 
         print('result : ', result_array)
         result = json.dumps({'result':result_array})
-        return JsonResponse(result, json_dumps_params={'ensure_ascii': False}, status=200)
+        return JsonResponse(result, content_type=u"application/json; charset=utf-8", status=200)
     else:
         return JsonResponse({"message": "error"}, status=400)
