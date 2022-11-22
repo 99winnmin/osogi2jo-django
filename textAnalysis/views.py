@@ -23,8 +23,8 @@ def text_analysis(request):
         # Text 분석 로직 코드 임베드 장소
         print(request.body)
         data = json.loads(request.body)
-        # novel = data['novel']
-        novel_url = 'https://www.tocsoda.co.kr/product/view?brcd=76M1912142125&epsdBrcd=76S1912866136'
+        novel_url = data['novel']
+        # novel_url = 'https://www.tocsoda.co.kr/product/view?brcd=76M1912142125&epsdBrcd=76S1912866136'
 
         options = webdriver.ChromeOptions()
         options.add_argument('headless')  # headless모드 브라우저가 뜨지 않고 실행됩니다.
