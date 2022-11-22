@@ -92,10 +92,9 @@ def text_analysis(request):
                             emotional_word.append((wordname, emotion_value,(text_reader.readsentence/text_reader.novel_len)*100))
                             emotion_sum += emotion_value
                             # result_array.append(dict(keyword=wordname, ratio=round((text_reader.readsentence / text_reader.novel_len) * 100)))
-
-                if (len(emotional_word) != 0):
-                    max_word = max(emotional_word, key=lambda x: x[1])
-                    result_array.append(dict(keyword=max_word[0], ratio=max_word[2]))
+            if (len(emotional_word) != 0):
+                max_word = max(emotional_word, key=lambda x: x[1])
+                result_array.append(dict(keyword=max_word[0], ratio=max_word[2]))
 
         print('result : ', result_array)
         result = json.dumps({'result':result_array})
