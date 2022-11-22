@@ -17,6 +17,7 @@ options = webdriver.ChromeOptions()
 options.add_argument('headless')  # headless모드 브라우저가 뜨지 않고 실행됩니다.
 options.add_argument('disable-dev-shm-usage')
 options.add_argument('--blink-settings=imagesEnabled=false')  # 브라우저에서 이미지 로딩을 하지 않습니다.
+options.add_argument('--disable-blink-features=AutomationControlled') # API 요청 너무 많이 되는거 처리
 options.add_argument("disable-gpu")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 keyword_detector = Word()
