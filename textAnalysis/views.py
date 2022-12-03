@@ -41,17 +41,15 @@ def text_analysis(request):
             )
 
         novel_text = driver.find_elements(By.TAG_NAME, 'p')
-        novel = ''
-        for i in novel_text:
-            # if i.text is not '':
-            novel += i.text + '\n\n'
-        driver.quit()
+        novel = novel_text[0].text
         print(novel)
+        driver.quit()
 
         result_array = list()
         text_reader = TextReader(novel)
         while (True):
             texts = text_reader.read()
+            print(texts)
             if texts is None:
                 break
 
