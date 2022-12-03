@@ -46,7 +46,7 @@ def text_analysis(request):
             # if i.text is not '':
             novel += i.text + '\n\n'
         driver.quit()
-
+        print(novel)
         max_unit = 150  # 문장 분석 수 / 150이 적당한 크기 같아서 임의로 설정함
 
         start_pos = 0  # 소설 시작 위치
