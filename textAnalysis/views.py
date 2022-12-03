@@ -42,7 +42,7 @@ def text_analysis(request):
 
         novel_text = driver.find_elements(By.TAG_NAME, 'p')
         novel = novel_text[0].text
-        print(novel)
+        # print(novel)
         driver.quit()
 
         result_array = list()
