@@ -49,7 +49,7 @@ def text_analysis(request):
         text_reader = TextReader(novel)
         while (True):
             texts = text_reader.read()
-            print(texts)
+            # print(texts)
             if texts is None:
                 break
 
