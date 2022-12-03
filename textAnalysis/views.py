@@ -44,19 +44,9 @@ def text_analysis(request):
         novel = ''
         for i in novel_text:
             # if i.text is not '':
-            novel += i.text + ''
+            novel += i.text + '\n\n'
         driver.quit()
         print(novel)
-        max_unit = 150  # 문장 분석 수 / 150이 적당한 크기 같아서 임의로 설정함
-
-        start_pos = 0  # 소설 시작 위치
-        end_pos = start_pos + max_unit  # 소설 끝날 위치 = 시작 + 분석 수
-
-        default_min_count = 3  # 키워드 최소 빈도수
-
-        # 파일에서 읽기
-        # novel_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'novel.txt')  # 5000줄로 늘림
-        # novel = open(novel_path, 'r', encoding='utf-8').read()
 
         result_array = list()
         text_reader = TextReader(novel)
@@ -66,12 +56,12 @@ def text_analysis(request):
                 break
 
             unit_length = int(text_reader.novel_len / 5)
+            emotional_word = []
             for i in range(0, 5):
                 tmp = texts[unit_length * i: unit_length * (i + 1)]
                 keywords, rank = keyword_detector.get_word_from_novel(tmp, 2)  # 소설에서 단어 읽어들이기
                 if (keywords == None):
                     continue
-                emotional_word = []
                 emotion_sum = 0
 
                 for wordname, r in sorted(keywords.items(), key=lambda x: x[1], reverse=True)[:30]:
