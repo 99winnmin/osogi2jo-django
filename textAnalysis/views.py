@@ -44,7 +44,7 @@ def text_analysis(request):
         novel = ''
         for i in novel_text:
             # if i.text is not '':
-            novel += i.text + '\n\n\n'
+            novel += i.text + ''
         driver.quit()
         print(novel)
         max_unit = 150  # 문장 분석 수 / 150이 적당한 크기 같아서 임의로 설정함
