@@ -18,7 +18,7 @@ keyword_detector = Word()
 emotion_detector = Emotion()
 
 @csrf_exempt
-def text_analysis(request):
+def novel_analysis(request):
     if request.method == 'POST':
         # Text 분석 로직 코드 임베드 장소
         print(request.body)
@@ -44,6 +44,61 @@ def text_analysis(request):
         novel = novel_text[0].text
         # print(novel)
         driver.quit()
+
+        result_array = list()
+        text_reader = TextReader(novel)
+        while (True):
+            texts = text_reader.read()
+            # print(texts)
+            if texts is None:
+                break
+
+            unit_length = int(text_reader.novel_len / 5)
+            emotional_word = []
+            for i in range(0, 5):
+                tmp = texts[unit_length * i: unit_length * (i + 1)]
+                keywords, rank = keyword_detector.get_word_from_novel(tmp, 2)  # 소설에서 단어 읽어들이기
+                if (keywords == None):
+                    continue
+                emotion_sum = 0
+
+                for wordname, r in sorted(keywords.items(), key=lambda x: x[1], reverse=True)[:30]:
+                    wordname = wordname.strip(" ")
+                    word, emotion = emotion_detector.data_list(wordname=wordname)  # 읽어들인 단어의 감정 분석
+                    if emotion != 'None':
+                        emotion_value = abs(r * int(emotion))
+                        emotional_word.append((wordname, emotion_value,(text_reader.readsentence/text_reader.novel_len)*100))
+                        emotion_sum += emotion_value
+                        # result_array.append(dict(keyword=wordname, ratio=round((text_reader.readsentence / text_reader.novel_len) * 100)))
+
+                if emotion_sum == 0:  # 만약 감정 단어를 추출하지 못했다면
+                    # print('감정 추출 결과 없음, 빈도수 조정')
+                    keywords, rank = keyword_detector.get_word_from_novel(texts, 1)  # min_count값을 1로 다시 추출함
+                    for wordname, r in sorted(keywords.items(), key=lambda x: x[1], reverse=True)[:30]:
+                        wordname = wordname.strip(" ")
+                        word, emotion = emotion_detector.data_list(wordname=wordname)  # 읽어들인 단어의 감정 분석
+                        if emotion != 'None':
+                            emotion_value = abs(r * int(emotion))
+                            emotional_word.append((wordname, emotion_value,(text_reader.readsentence/text_reader.novel_len)*100))
+                            emotion_sum += emotion_value
+                            # result_array.append(dict(keyword=wordname, ratio=round((text_reader.readsentence / text_reader.novel_len) * 100)))
+            if (len(emotional_word) != 0):
+                max_word = max(emotional_word, key=lambda x: x[1])
+                result_array.append(dict(keyword=max_word[0], ratio=max_word[2]))
+
+        print('result : ', result_array)
+        result = json.dumps(result_array,ensure_ascii=False)
+        return HttpResponse(result, status=200)
+    else:
+        return JsonResponse({"message": "error"}, status=400)
+
+@csrf_exempt
+def text_analysis(request):
+    if request.method == 'POST':
+        # Text 분석 로직 코드 임베드 장소
+        print(request.body)
+        data = json.loads(request.body)
+        novel = data['novel']
 
         result_array = list()
         text_reader = TextReader(novel)
